@@ -56,10 +56,14 @@ namespace PID_Tuner
 
     public class PID
     {
-        public double KC { get; set; } = 0.5; // Controller gain
-        public double TI { get; set; } = 0.01; // Time-constant for I action
+        public double KC { get; set; } = 0.075; // Controller gain
+        public double TI { get; set; } = 0.001; // Time-constant for I action
         public double TD { get; set; } = 0; // Time-constant for D action
         public double TS { get; set; } = 0; // Sample time [sec.]
+
+        public double GMA_HLIM { get; set; } = 100;
+        public double GMA_LLIM { get; set; } = 0;
+
 
         double xk_1;  // PV[k-1] = Thlt[k-1]
         double xk_2;  // PV[k-2] = Thlt[k-1]
@@ -98,7 +102,7 @@ namespace PID_Tuner
             xk_2 = xk_1;                        // x[k-2] = x[k-1]
             xk_1 = xk;                          // x[k-1] = x[k]
 
-            /*
+            
             // limit y[k] to GMA_HLIM and GMA_LLIM
             if (yk > GMA_HLIM)
             {
@@ -108,7 +112,7 @@ namespace PID_Tuner
             {
                 yk = GMA_LLIM;
             }
-            */
+            
 
             return yk;
         }
