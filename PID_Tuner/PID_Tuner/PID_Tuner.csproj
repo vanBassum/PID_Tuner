@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Complex.cs" />
     <Compile Include="DiscreteTransfer.cs" />
     <Compile Include="Filters\FIR.cs" />
     <Compile Include="Filters\Transfer.cs" />
@@ -63,12 +64,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="F_Filter.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="F_Filter.Designer.cs">
-      <DependentUpon>F_Filter.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Fourier.cs" />
     <Compile Include="Filters\IIR_DF1.cs" />
     <Compile Include="PID_Controllers\History.cs" />
     <Compile Include="PID_Controllers\IPID.cs" />
@@ -84,9 +80,6 @@
     <Compile Include="Source.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="F_Filter.resx">
-      <DependentUpon>F_Filter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PN-Viewer.resx">
       <DependentUpon>PN-Viewer.cs</DependentUpon>

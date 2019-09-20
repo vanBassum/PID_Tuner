@@ -13,35 +13,12 @@ using MasterLibrary.Extentions;
 
 namespace PID_Tuner
 {
-    [DefaultProperty("DataSource")]
     public partial class PN_Viewer : UserControl
     {
-        private IBindingList _dataSource;
-        [Bindable(true),
-        Category("Data"),
-        DefaultValue(null),
-        Description("The data source used to build up the bulleted list."),
-        DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public IBindingList DataSource
-        {
-            get
-            {
-                return _dataSource;
-            }
-            set
-            {
-                _dataSource = value;
-                _dataSource.ListChanged += _dataSource_ListChanged;
-            }
-        }
-
-        private void _dataSource_ListChanged(object sender, ListChangedEventArgs e)
-        {
-            Invalidate();
-        }
-
+        Transfer _transfer;
+        public Transfer Transfer { get { return _transfer; } set { _transfer = value; Invalidate(); } }
         PNColorSet colorSet = new PNColorSet();
-
+        
         public PN_Viewer()
         {
             InitializeComponent();
@@ -52,6 +29,7 @@ namespace PID_Tuner
 
         }
 
+
         private void PN_Viewer_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -59,7 +37,7 @@ namespace PID_Tuner
 
             V2D size = this.Size;
             V2D org = size / 2;
-            double radius = Math.Min(this.Width, this.Height) / 2;
+            double radius = Math.Min(this.Width, this.Height) / 2 - 2;
 
             //Draw grid.
             for (int i = 0; i < 20; i++)
@@ -71,40 +49,18 @@ namespace PID_Tuner
                 g.DrawV2D(colorSet.Grid, v, org);
             }
 
-            //Draw PN points
-            if (_dataSource != null)
+
+            if(Transfer != null)
             {
-                foreach (object o in _dataSource)
-                {
-                    switch (o)
-                    {
-                        case Zero z:
-                            g.DrawCircle(colorSet.Pole, org + z * radius, 7);
-                            if (z.Y != 0)
-                                g.DrawCircle(colorSet.Pole, org + z.Conjugate() * radius, 7);
-                            break;
-                        case Pole p:
-                            g.DrawCross(colorSet.Zero, org + p * radius, 7);
-                            if (p.Y != 0)
-                                g.DrawCross(colorSet.Pole, org + p.Conjugate() * radius, 7);
-                            break;
-                    }
-                }
+                foreach (Complex pole in Transfer.Poles)
+                    g.DrawCross(colorSet.Pole, org + (V2D)(pole * radius),7);
+
+                foreach (Complex zero in Transfer.Zeroes)
+                    g.DrawCircle(colorSet.Pole, org + (V2D)(zero * radius), 7);
             }
+
         }
     }
-
-
-    public class Pole : V2D
-    {
-
-    }
-
-    public class Zero : V2D
-    {
-
-    }
-
 
     public class PNColorSet
     {

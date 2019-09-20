@@ -3,6 +3,7 @@ using System;
 
 namespace PID_Tuner
 {
+    /*
     public class Transfer
     {
         public double[] CooficientsX { get; set; } = new double[] { 1 };
@@ -92,4 +93,6 @@ namespace PID_Tuner
             return s;
         }
     }
+
+    */
 }
