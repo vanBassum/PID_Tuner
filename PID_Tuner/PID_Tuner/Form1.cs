@@ -28,8 +28,14 @@ namespace PID_Tuner
             H.Poles.Add(new Complex(0.5, 0.5));
             H.Poles.Add(new Complex(0.5, -0.5));
 
-            H.Zeroes.Add(new Complex(-0.6, 0.7));
-            H.Zeroes.Add(new Complex(-0.6, -0.7));
+            H.Zeroes.Add(new Complex(0, 0)); 
+            H.Zeroes.Add(new Complex(-1, 0));
+
+            //0.377014140004109, 0, 0, 1, -0.5, // b0, b1, b2, a1, a2
+            //0.5, 0.5, 0, 0, 0                 // b0, b1, b2, a1, a2
+
+            //Zie DSP WK6 5e sheet...
+
 
             pN_Viewer1.Transfer = H;
 
@@ -37,9 +43,11 @@ namespace PID_Tuner
             chart1.Series[0].Points.Clear();
 
             for(int i=0; i<N; i++)
-            {
-                chart1.Series[0].Points.AddXY((double)i/N ,Math.Log10( H.S(Math.PI * 2 * i / N)));
-            }
+                chart1.Series[0].Points.AddXY((double)i/N ,( H.S(Math.PI * i / N)));
+            
+
+
+
 
         } 
     }
